@@ -1,0 +1,76 @@
+#!/bin/sh
+
+echo "+++++++++install OpenAIL library start++++++++++"
+
+INSTALL_NAME=OpenAIL
+INSTALL_DIR=/usr
+INSTALL_INC_DIR=$INSTALL_DIR/include/$INSTALL_NAME
+INSTALL_LIB_DIR=$INSTALL_DIR/lib
+
+echo "include dir = $INSTALL_INC_DIR"
+echo "lib dir     = $INSTALL_LIB_DIR"
+
+mkdir $INSTALL_INC_DIR -p
+
+#copy head files
+cp duye_* $INSTALL_INC_DIR
+cp ./inc $INSTALL_INC_DIR -rf
+
+rm $INSTALL_INC_DIR/logger -rf
+mkdir $INSTALL_INC_DIR/logger -p
+cp ./logger/inc $INSTALL_INC_DIR/logger -rf
+
+rm $INSTALL_INC_DIR/posix -rf
+mkdir $INSTALL_INC_DIR/posix -p
+mkdir $INSTALL_INC_DIR/posix/ipc -p
+mkdir $INSTALL_INC_DIR/posix/memory -p
+mkdir $INSTALL_INC_DIR/posix/socket -p
+mkdir $INSTALL_INC_DIR/posix/stdio -p
+mkdir $INSTALL_INC_DIR/posix/system -p
+mkdir $INSTALL_INC_DIR/posix/thread -p
+cp ./posix/duye_* $INSTALL_INC_DIR/posix/ -f
+cp ./posix/inc $INSTALL_INC_DIR/posix/ -rf
+cp ./posix/ipc/inc $INSTALL_INC_DIR/posix/ipc -rf
+cp ./posix/memory/inc $INSTALL_INC_DIR/posix/memory -rf
+cp ./posix/socket/inc $INSTALL_INC_DIR/posix/socket -rf
+cp ./posix/stdio/inc $INSTALL_INC_DIR/posix/stdio -rf
+cp ./posix/system/inc $INSTALL_INC_DIR/posix/system -rf
+cp ./posix/thread/inc $INSTALL_INC_DIR/posix/thread -rf
+
+rm $INSTALL_INC_DIR/dstl -rf
+mkdir $INSTALL_INC_DIR/dstl -p
+mkdir $INSTALL_INC_DIR/dstl/arithmetic -p
+mkdir $INSTALL_INC_DIR/dstl/component -p
+mkdir $INSTALL_INC_DIR/dstl/vector -p
+cp ./dstl/duye_* $INSTALL_INC_DIR/dstl -f
+cp ./dstl/inc $INSTALL_INC_DIR/dstl -rf
+cp ./dstl/arithmetic/inc $INSTALL_INC_DIR/dstl/arithmetic -rf
+cp ./dstl/component/inc $INSTALL_INC_DIR/dstl/component -rf
+cp ./dstl/vector/inc $INSTALL_INC_DIR/dstl/vector -rf
+
+mkdir $INSTALL_INC_DIR/util -p
+mkdir $INSTALL_INC_DIR/util/ini -p
+mkdir $INSTALL_INC_DIR/util/xml -p
+cp ./util/duye_* $INSTALL_INC_DIR/util -f
+cp ./util/inc $INSTALL_INC_DIR/util -rf
+cp ./util/ini/inc $INSTALL_INC_DIR/util/ini -rf
+cp ./util/xml/inc $INSTALL_INC_DIR/util/xml -rf
+
+#copy library
+rm $INSTALL_LIB_DIR/libdlogger.* -f
+rm $INSTALL_LIB_DIR/libdposix.* -f
+rm $INSTALL_LIB_DIR/libdstl.* -f
+rm $INSTALL_LIB_DIR/libdutil.* -f
+
+cp ./lib/* $INSTALL_LIB_DIR -f
+
+ln -s $INSTALL_LIB_DIR/libdlogger.1.0.0.so $INSTALL_LIB_DIR/libdlogger.so
+
+ln -s $INSTALL_LIB_DIR/libdposix.1.0.0.so $INSTALL_LIB_DIR/libdposix.so
+
+ln -s $INSTALL_LIB_DIR/libdstl.1.0.0.so $INSTALL_LIB_DIR/libdstl.so
+
+ln -s $INSTALL_LIB_DIR/libdutil.1.0.0.so $INSTALL_LIB_DIR/libdutil.so
+
+echo "lib list    = libdlogger.so libdposix.so libdstl.so libdutil.so"
+echo "++++++++install duye library success+++++++++"
