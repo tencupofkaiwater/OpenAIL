@@ -1,4 +1,4 @@
-INCLUDES += $(DUYE_ROOT) 	
+INCLUDES += 
 
 SLIBS +=
 
@@ -31,8 +31,6 @@ MISSING_DEPS := $(filter-out $(wildcard $(DEPS)), $(DEPS))
 
 $(TARGET) : $(OBJS)
 	$(CC) -shared -o $(BUILD_PATH)/output/lib/$(TARGET).$(VERSION).so $(OBJS) -Wl,--whole-archive $(SLIBS) -Wl,--no-whole-archive $(addprefix -l, $(LIBS)) $(addprefix -L, $(LIBS_PATH))
-	mkdir $(DUYE_LIB) -p
-	cp -ax $(BUILD_PATH)/output/lib/$(TARGET).$(VERSION).so $(DUYE_LIB)
 	@echo "++++++++++Build $(TARGET).$(VERSION).so Success++++++++++"
 
 $(OBJDIR)/%.o:$(SRCDIR)/%.cpp
@@ -43,7 +41,9 @@ $(OBJDIR)/%.o:$(SRCDIR)/%.cpp
 
 install :
 	@echo "start install $(TARGET).$(VERSION).so ..."
-	@echo 'install $(TARGET).$(VERSION).so complete ...'
+	mkdir $(OPENAIL_LIB) -p
+	cp -ax $(BUILD_PATH)/output/lib/$(TARGET).$(VERSION).so $(OPENAIL_LIB)
+	@echo '++++++++++install $(TARGET).$(VERSION).so to $(OPENAIL_LIB) complete+++++++'
 
 clean :
 	$(RM) $(BUILD_PATH)/output -rf
@@ -51,7 +51,7 @@ clean :
 
 cleanall :
 	$(RM) $(BUILD_PATH)/output -rf
-	$(RM) $(DUYE_LIB)/$(TARGET).so -rf
+	$(RM) $(OPENAIL_LIB) -rf
 	@#touch `find . -name "*.cpp" | xargs`
 
 ifneq ($(MISSING_DEPS),)

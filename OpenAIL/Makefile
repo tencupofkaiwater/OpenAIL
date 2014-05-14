@@ -1,32 +1,14 @@
-all: dstllib dlogger dposix dutil ut_app
+PRONAME:=openail
+VERSION:=1.0.0
+TARGET:=lib$(PRONAME)
+PRE_DEFINED:= 
+BUILD_PATH:=$(shell pwd)
 
-clean:
-	$(MAKE) -C dstl clean
-	$(MAKE) -C logger clean
-	$(MAKE) -C posix clean
-	$(MAKE) -C util clean
-	$(MAKE) -C ut clean
+INCLUDES:=$(BUILD_PATH)/inc \
+	/usr/include/OpenAIL \
 
-cleanall:
-	$(MAKE) -C dstl cleanall
-	$(MAKE) -C logger cleanall
-	$(MAKE) -C posix cleanall
-	$(MAKE) -C util cleanall
-	$(MAKE) -C ut cleanall
-	rm $(DUYE_LIB) -rf
-	rm $(DUYE_BIN) -rf
+LIBS_PATH:=/usr/lib 
 
-dstllib:
-	$(MAKE) -C dstl
+LIBS:=
 
-dlogger:    
-	$(MAKE) -C logger    
-
-dposix:    
-	$(MAKE) -C posix
-
-dutil:    
-	$(MAKE) -C util
-
-ut_app:
-	$(MAKE) -C ut
+include ./shared.mk

@@ -1,4 +1,4 @@
-INCLUDES += $(DUYE_ROOT) 	
+INCLUDES += 
 
 SLIBS += 
 
