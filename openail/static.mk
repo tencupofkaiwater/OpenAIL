@@ -1,6 +1,6 @@
-INCLUDES += $(OPENAIL_ROOT)
+INCLUDES += 
 
-SLIBS +=
+SLIBS += 
 
 LIBS += 
 
@@ -16,34 +16,33 @@ SRCDIR = $(BUILD_PATH)/src
 RM := rm -f
 PS=cpp
 CC=g++
-CPPFLAGS = -Wall -g -O0 -Wall -march=i686
+#CPPFLAGS = -Wall -g -O0 -Wall -march=i686
 CPPFLAGS += -fPIC 
-CPPFLAGS += -MMD
+#CPPFLAGS += -MMD
 CPPFLAGS += $(addprefix -I, $(INCLUDES))
 CPPFLAGS += $(addprefix -D, $(PRE_DEFINED))
 
-SOURCE += $(wildcard $(BUILD_PATH)/src/*.$(PS))
-
+SOURCE := $(wildcard $(BUILD_PATH)/src/*.$(PS))
 CPPSRCS := $(notdir $(SOURCE))
 OBJS := $(patsubst %.$(PS), $(OBJDIR)/%.o, $(CPPSRCS))
 DEPS := $(patsubst %.o, $(OBJDIR)/%.d, $(CPPSRCS))
 MISSING_DEPS := $(filter-out $(wildcard $(DEPS)), $(DEPS))
 
 $(TARGET) : $(OBJS)
-	$(CC) -shared -o $(BUILD_PATH)/output/lib/$(TARGET).$(VERSION).so $(OBJS) -Wl,--whole-archive $(SLIBS) -Wl,--no-whole-archive $(addprefix -l, $(LIBS)) $(addprefix -L, $(LIBS_PATH))
-	@echo "++++++++++Build $(TARGET).$(VERSION).so Success++++++++++"
+	ar rcs $(BUILD_PATH)/output/lib/$(TARGET).a $(OBJS)
+	mkdir ../lib -p
+	cp -ax $(BUILD_PATH)/output/lib/$(TARGET).a ../lib
+	@echo "++++++++++Build $(TARGET).a Success++++++++++"
 
 $(OBJDIR)/%.o:$(SRCDIR)/%.cpp
-	@echo $<, `more $<|wc -l` lines
+	@echo compile file $<, `more $<|wc -l` lines ....
 	$(CC) -c $(CPPFLAGS) -o $@ $< 
 
 .PHONY : all install clean cleanall 
 
-install :
-	@echo "start install $(TARGET).$(VERSION).so ..."
-	mkdir $(OPENAIL_LIB) -p
-	cp -ax $(BUILD_PATH)/output/lib/$(TARGET).$(VERSION).so $(OPENAIL_LIB)
-	@echo '++++++++++install $(TARGET).$(VERSION).so to $(OPENAIL_LIB) complete+++++++'
+install:
+	@echo "start install $(TARGET).a ..."
+	@echo "install $(TARGET).a complete ..."
 
 clean :
 	$(RM) $(BUILD_PATH)/output -rf
@@ -51,7 +50,7 @@ clean :
 
 cleanall :
 	$(RM) $(BUILD_PATH)/output -rf
-	$(RM) $(OPENAIL_LIB) -rf
+	$(RM) ../lib/$(TARGET).a -rf
 	@#touch `find . -name "*.cpp" | xargs`
 
 ifneq ($(MISSING_DEPS),)
