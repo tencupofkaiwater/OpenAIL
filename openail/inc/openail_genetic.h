@@ -17,15 +17,15 @@
 
 #pragma once
 
-#include <openail/openail.h>
+#include <openail/inc/openail.h>
 
 OPENAIL_NS_BEG
 
 class Genetic
 {
 public:
-    Genetic() {}
-    ~Genetic() {}
+    Genetic();
+    ~Genetic();
 };
 
 OPENAIL_NS_END

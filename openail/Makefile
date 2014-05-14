@@ -9,6 +9,6 @@ INCLUDES:=$(BUILD_PATH)/inc \
 
 LIBS_PATH:=/usr/lib 
 
-LIBS:=logger
+LIBS:=dlogger
 
 include ./shared.mk
