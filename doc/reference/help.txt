@@ -1,2 +1,5 @@
 http://code.csdn.net/news/2819741
 Scikit-Learn：开源的机器学习Python模块
+
+http://books.google.com.hk/books?id=CR--PWzRdNIC&lpg=PA40&ots=hbMee1Udya&dq=%E9%97%AE%E9%A2%98%E5%BD%92%E7%BA%A6%E6%B3%95&hl=zh-CN&pg=PA40#v=onepage&q&f=false
+人工智能(清华大学出版社  作者：温斯顿)
